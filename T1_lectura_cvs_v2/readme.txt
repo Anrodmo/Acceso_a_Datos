@@ -1,1 +1,0 @@
-Versión del ejercicio con lectura muestra por pantalla y escritura.
