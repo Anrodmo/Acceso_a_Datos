@@ -16,7 +16,7 @@ public class AD_UT1_Ejercicio1 {
 
   
     public static void main(String[] args) {
-        String ruta = "./src/ad_ut1_ejercicio1/alumnosttttNotas.txt";
+        String ruta = "./src/ad_ut1_ejercicio1/alumnosNotas.txt";
         String archivo="";
         
         try{
@@ -52,7 +52,7 @@ public class AD_UT1_Ejercicio1 {
             }
              
         }
-        return archivo; // Devuelvo una imagen del  archivo en una variable Strin  
+        return archivo; // Devuelvo una imagen del  archivo en una variable String  
     }
     
     
@@ -67,11 +67,15 @@ public class AD_UT1_Ejercicio1 {
         String linea[];
         int suma;
         double media;     
-        while ( entradaDatos.hasNext() ){
+        while ( entradaDatos.hasNext() ){ 
             linea = entradaDatos.nextLine().split(":");
             suma=0;                                
             for (int i = 1; i < linea.length; i++) {
-                suma+= Integer.parseInt(linea[i])  ;               
+               try{
+                   suma+= Integer.parseInt(linea[i])  ; 
+               }catch (NumberFormatException ex){
+                   System.out.println("Error. Dato leido no es una nota válida.");
+               }                              
             }           
             media = (double)suma/(linea.length-1);
             System.out.print("Alumno: "+linea[0]);
