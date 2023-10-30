@@ -39,10 +39,7 @@ public class NotasAlumno {
      * Lee un archivo de texto CSV con formato: nombre:nota:nota:nota: ...
      * Donde nota ha de ser un numero  entero y nombre una cadena  de texto.
      * @param ruta String con la ruta del archivo de lectura
-     * @return ArrayList de objetos  NotaAlumnos
-     * @throws FileNotFoundException   El arhcivo de la ruta no existe.
-     * @throws IOException  Al  leer el archivo de la ruta
-     * @throws NullPointerException if ruta == null
+     * @return ArrayList de objetos  NotaAlumnos, si hay algun error lo devuelve null.
      */
     public static ArrayList<NotasAlumno> leerArchivoNotas(String ruta){       
         ArrayList<NotasAlumno> listado=null;
@@ -92,10 +89,6 @@ public class NotasAlumno {
      * en formato  CSV --> nombre:nota:nota ...
      * @param listado coleccion de Notasalumno
      * @param ruta ruta donde se creará  o sobreescribirá el archivo
-     * @throws NullPointerException 
-     * @throws FileNotFoundException
-     * @throws IOException
-     * @throws Exception
      */
     public static void escribirNotasEnDisco(ArrayList <NotasAlumno> listado, String ruta){
                
