@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -42,42 +44,46 @@ public class NotasAlumno {
      * @throws IOException  Al  leer el archivo de la ruta
      * @throws NullPointerException if ruta == null
      */
-    public static ArrayList<NotasAlumno> leerArchivoNotas(String ruta) 
-            throws FileNotFoundException, IOException, NullPointerException{
-        
-        ArrayList<NotasAlumno> listado= new ArrayList();
+    public static ArrayList<NotasAlumno> leerArchivoNotas(String ruta){       
+        ArrayList<NotasAlumno> listado=null;
         ArrayList<Integer> notas;
         String[] linea;
         File archivo;
-        try{
-            archivo  = new File(ruta);
-        }catch (NullPointerException ex){
-            throw ex;
-        }
         
-        if ( archivo.exists() && !archivo.isDirectory() && archivo.canRead() ){
+        if(ruta != null){
+            archivo  = new File(ruta);
+            
+            if ( archivo.exists() && !archivo.isDirectory() && archivo.canRead() ){
                 // Try  con recursos para que cierre solo el IS
-            try(FileInputStream in = new FileInputStream(ruta)){
-            Scanner lectura = new Scanner(in);
-                //Minetras haya algo que leer guardo en linea la siguiente linea
-                while (lectura.hasNext()){
-                    notas= new ArrayList();
-                    linea = lectura.nextLine().split(":");
-                    // Para cada nota tras el nombre  la parseo al arraylist de notas
-                    for (int i = 1; i < linea.length; i++) {
-                        try{
-                            notas.add(Integer.valueOf(linea[i]));
-                        }catch (NumberFormatException ex){
-                            System.out.println("Error. Dato leido no es una nota válida."
-                                    + "Se continua con el siguiente  dato.");
-                        }                   
+                try(FileInputStream in = new FileInputStream(ruta)){
+                    listado= new ArrayList();
+                    Scanner lectura = new Scanner(in);
+                    //Minetras haya algo que leer guardo en linea la siguiente linea
+                    while (lectura.hasNext()){
+                        notas= new ArrayList();
+                        linea = lectura.nextLine().split(":");
+                        // Para cada nota tras el nombre  la parseo al arraylist de notas
+                        for (int i = 1; i < linea.length; i++) {
+                            try{
+                                notas.add(Integer.valueOf(linea[i]));
+                            }catch (NumberFormatException ex){
+                                System.out.println("Error. Dato leido no es una nota válida."
+                                        + "Se continua con el siguiente  dato.");
+                            }                   
+                        }
+                        // Cada alumno  con sus notas lo añado  al arraylist de NotasAlumno
+                        listado.add( new NotasAlumno(linea[0], notas) );            
                     }
-                    // Cada alumno  con sus notas lo añado  al arraylist de NotasAlumno
-                    listado.add( new NotasAlumno(linea[0], notas) );            
-                }
-            }                
-        }else
-            System.out.println("Error, la ruta especificada no es un archivo o no se tiene acceso.");                         
+                }catch(IOException ex){
+                    System.out.println("Error de lecttura / escritura");                   
+                }                
+            }else
+                System.out.println("Error, la ruta especificada no es un archivo o no se tiene acceso.");
+            
+        }else {
+            listado = null;
+            System.out.println("Error, la ruta no puede ser null");          
+        }                                
         return listado; // Devuelvo un ArrayList de AlumnoNotas       
     }
     
@@ -91,31 +97,36 @@ public class NotasAlumno {
      * @throws IOException
      * @throws Exception
      */
-    public static void escribirNotasEnDisco(ArrayList <NotasAlumno> listado, String ruta)
-            throws NullPointerException, FileNotFoundException, IOException, Exception  {
+    public static void escribirNotasEnDisco(ArrayList <NotasAlumno> listado, String ruta){
                
         File archivo;
-        try{      
-            archivo  = new File(ruta);
-        }catch (NullPointerException ex){
-            throw ex;  // si la ruta es nula lanzo una excepción.
-        }        
-        if(listado == null)  // si la coleccion de NopaAlumno es null lanzo una excepcion.
-            throw new NullPointerException ("Error, colección de NotasAlumno  no puede  ser nulo");
-        
-        // si el archivo  no es un directorio  y
-                             // obien existe y se puede esxribir en el,       o bien no exsite y se puede crear y se crea   
-        if( !archivo.isDirectory() && (archivo.exists()&&archivo.canWrite()  || ! archivo.exists()&&archivo.createNewFile()) ){
-            // si todo es correcto creo o sobreescribo el archivo
-            try(BufferedWriter  bufferEscritura = new BufferedWriter(new FileWriter(archivo))){
-                for (NotasAlumno notasAlumno : listado) {
-                    bufferEscritura.write(notasAlumno.toString());
-                    bufferEscritura.newLine();
-                }
-           }                      
-        }else   //  si la  ruta es un directorio o no se tiene  permiso de escritura lanzo una ex¡cepcion
-            throw new Exception ("Error, el archivo es un directorio o no se"
-                    + "tiene acceso ");       
+        if(ruta!=null && listado != null){
+            archivo  = new File(ruta);           
+            try {
+                // si el archivo  no es un directorio  y
+                // obien existe y se puede esxribir en el,       o bien no exsite y se puede crear y se crea
+                if( !archivo.isDirectory() && (archivo.exists()&&archivo.canWrite()  || ! archivo.exists()&&archivo.createNewFile()) ){
+                    // si todo es correcto creo o sobreescribo el archivo
+                    try(BufferedWriter  bufferEscritura = new BufferedWriter(new FileWriter(archivo))){
+                        for (NotasAlumno notasAlumno : listado) {
+                            bufferEscritura.write(notasAlumno.toString());
+                            bufferEscritura.newLine();
+                        }
+                    } catch (IOException ex) {
+                        System.out.println("Error de escritura al guardar el listado");
+                    }
+                }else   //  si la  ruta es un directorio o no se tiene  permiso de escritura lanzo una ex¡cepcion
+                    System.out.println("Error, el archivo es un directorio o no se"
+                            + "tiene acceso ");
+            } catch (IOException ex) {
+                System.out.println("Error, la ruta no es un archivo o no se tiene acceso.");
+            }         
+        }else{
+            if(listado == null)  // si la coleccion de NopaAlumno es null lanzo una excepcion.
+                System.out.println("Error, el lsitaod de alumno y notas  no puede ser nulo.");
+            if(ruta == null)  // si la coleccion de NopaAlumno es null lanzo una excepcion.
+                System.out.println("Error, la ruta facilitada no puede ser null.");
+        }              
     }
     
     /**

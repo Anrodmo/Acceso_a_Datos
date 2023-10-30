@@ -20,29 +20,27 @@ public class AD_UT1_Ejercicio1v2 {
         String rutaBackup = "./src/ejercicio1v2/alumnosNotasBackup.txt";
         ArrayList <NotasAlumno> listado=null;
         
-        try {
-            listado = NotasAlumno.leerArchivoNotas(ruta);
+        if( (listado = NotasAlumno.leerArchivoNotas(ruta)) != null ){
             for (NotasAlumno notasAlumno : listado) {
                 System.out.println(notasAlumno.muestraNotaMedia());               
             }
             
-        } catch (IOException ex) {
-            System.out.println("Error de lectura escritura");
-        } catch (NullPointerException ex) {
-            System.out.println("Error. La ruta facilitada no existe.");
-        }
-        
-        
-        System.out.println("Escribiendo notas en archivo backup ....");
-        
-        try {
+            System.out.println("Escribiendo notas en archivo backup ....");
             NotasAlumno.escribirNotasEnDisco(listado, rutaBackup);
             System.out.println("... escritura completada.");
-        } catch (IOException ex) {
-            System.out.println("Error de escritura en disco.");
-        } catch (Exception ex) {
-            System.out.println("Error."+ex.toString());
+            
         }
+            
+            
+            
+        
+        
+        
+        
+        
+        
+            
+       
         
     }
     
