@@ -18,7 +18,7 @@ import org.xml.sax.SAXException;
  * @author anrod
  */
 public class AccesoDOM {
-    public Document miDocumento;
+    private Document miDocumento;
     
     public int abrirXMLaDom (File archivo){
        int retorno=-1;
