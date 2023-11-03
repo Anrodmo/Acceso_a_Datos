@@ -46,15 +46,16 @@ public class AccesoDOM {
     public void recorreDOMyMuestra(){
         System.out.println(miDocumento.getFirstChild().getNodeName()); // obtengo el nombre de la raiz y lo imprimo
         NodeList nodosHijos = miDocumento.getFirstChild().getChildNodes();
-        recorreElementosyMuestra(nodosHijos);
+        recorreElementosyMuestra(nodosHijos,0);
     }
     
-    public boolean recorreElementosyMuestra(NodeList  nodosHijos){
+    public boolean recorreElementosyMuestra(NodeList  nodosHijos, int nivel){
         boolean tieneHijosElementos=false;
+        nivel++;
         for (int i = 0; i < nodosHijos.getLength(); i++) {           
             if(nodosHijos.item(i).getNodeType() == Node.ELEMENT_NODE){
                 tieneHijosElementos = true;             
-                System.out.print(nodosHijos.item(i).getNodeName());              
+                System.out.print(tabs(nivel)+nodosHijos.item(i).getNodeName());              
                 if(nodosHijos.item(i).hasAttributes()){
                     recorreAtributosyMuestra(nodosHijos.item(i));
                 }
@@ -63,7 +64,7 @@ public class AccesoDOM {
                 }                   
             }           
             if(nodosHijos.item(i).hasChildNodes()){
-                if ( !recorreElementosyMuestra(nodosHijos.item(i).getChildNodes()) ){
+                if ( !recorreElementosyMuestra(nodosHijos.item(i).getChildNodes(),nivel) ){
                     System.out.print(" :  "+nodosHijos.item(i).getTextContent()+"\n");              
                 }else{
                     System.out.println("");
@@ -74,7 +75,7 @@ public class AccesoDOM {
         return tieneHijosElementos;
     }
     
-    public void recorreAtributosyMuestra(Node nodo){
+    private void recorreAtributosyMuestra(Node nodo){
         NamedNodeMap atributos= nodo.getAttributes();       
         for (int i = 0; i < atributos.getLength(); i++) {
             System.out.print("  "+atributos.item(i).getNodeName()+" = "+
@@ -82,13 +83,21 @@ public class AccesoDOM {
         } 
     }
     
-    public boolean hijosSonElementos(NodeList  nodosHijos){
+    private boolean hijosSonElementos(NodeList  nodosHijos){
         boolean tieneHijosElementos=false;
         for (int i = 0; i < nodosHijos.getLength(); i++) {           
             if(nodosHijos.item(i).getNodeType() == Node.ELEMENT_NODE)
                 tieneHijosElementos = true;                    
         }
         return tieneHijosElementos;
+    }
+    
+    private String tabs(int nivel){
+        String tabulacion="";
+        for (int i = 0; i < nivel; i++) {
+            tabulacion+="\t";
+        }
+        return tabulacion;
     }
     
     
@@ -105,7 +114,7 @@ public class AccesoDOM {
             nTitulo.appendChild(nTitulo_text); // añade el texto del titulo al nodo titulo.
 
             Node nAutor = miDocumento.createElement("Autor"); // crea atiquetas.
-            Node nAutor_text=miDocumento.createTextNode(titulo); // asigna el autor
+            Node nAutor_text=miDocumento.createTextNode(autor); // asigna el autor
 
             nAutor.appendChild(nAutor_text); // añade el texto del autor al nodo autor.
 
@@ -129,26 +138,30 @@ public class AccesoDOM {
     
     public int deleteNode(String titulo){
         int correcto = 0;
-        System.out.println("Buscando el Libro "+titulo+" para borrarlo.");
-        
-        NodeList listaNodos = miDocumento.getElementsByTagName("titulo");
-        Node unNodo;
-        
-        for (int i = 0; i < listaNodos.getLength(); i++) {
-            unNodo = listaNodos.item(i);
-            if (unNodo.getNodeType() == Node.ELEMENT_NODE){
-                if(unNodo.getChildNodes().item(0).getNodeValue().equals(titulo)){
-                    // value y no name???
-                    System.out.println("Borramdo el Libro ....");
-                    unNodo.getParentNode().removeChild(unNodo);
-                    System.out.println("... Nodo borrado.");
+        try{
+            System.out.println("Buscando el Libro "+titulo+" para borrarlo.");
+
+            NodeList listaNodos = miDocumento.getElementsByTagName("Titulo");
+            Node unNodo;
+
+            for (int i = 0; i < listaNodos.getLength(); i++) {
+                unNodo = listaNodos.item(i);
+                if (unNodo.getNodeType() == Node.ELEMENT_NODE){ //redundante por getElementsByTagName, no lo es si buscamos getChildNodes()
+                    if(unNodo.getChildNodes().item(0).getTextContent().equals(titulo)){
+                                                        // .getNodeValue()
+                        System.out.println("Borramdo el Libro ....");
+
+                        unNodo.getParentNode().getParentNode().removeChild(unNodo.getParentNode());
+                        System.out.println("... Nodo borrado.");
+                    }                                                  
                 }
-                                                   
+
             }
-            
+        }catch(Exception e){
+            System.out.println("Error el borrar del DOM el libro con titulo: "+titulo);
+            correcto=-1;
         }
-        
-        
+        return correcto;
     }
      
 }
