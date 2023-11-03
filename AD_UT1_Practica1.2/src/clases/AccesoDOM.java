@@ -90,6 +90,66 @@ public class AccesoDOM {
         }
         return tieneHijosElementos;
     }
+    
+    
+    public int insertarLibroEnDOM(String titulo, String autor, String fecha){
+        int correcto = 0;
+        
+        try{
+            System.out.println("Añadir libro al arbol DOM: "+titulo+";"+autor+";"+fecha);
+            //crea los nodos=>los añade al padre desde las hojas a la raíz
+                    //CREATE TITULO con el texto en medio
+            Node nTitulo = miDocumento.createElement("Titulo"); // crea atiquetas.
+            Node nTitulo_text=miDocumento.createTextNode(titulo); // asigna el titulo
+
+            nTitulo.appendChild(nTitulo_text); // añade el texto del titulo al nodo titulo.
+
+            Node nAutor = miDocumento.createElement("Autor"); // crea atiquetas.
+            Node nAutor_text=miDocumento.createTextNode(titulo); // asigna el autor
+
+            nAutor.appendChild(nAutor_text); // añade el texto del autor al nodo autor.
+
+            Node nLibro = miDocumento.createElement("Libro"); // creo el padre Libro
+            ((Element)nLibro).setAttribute("publicado", fecha); // creo el atributo y lo pongo en Libro
+            nLibro.appendChild(nTitulo);
+            nLibro.appendChild(nAutor);  // Asigno como hijos los nodos titulo y autor
+
+            nLibro.appendChild(miDocumento.createTextNode("\n")); // inserta salto de linea
+
+            Node raiz  = miDocumento.getFirstChild();  // cojo la raiz --> miDocumento.getChildNodes().item(0).
+            raiz.appendChild(nLibro);  // añado el Libro a la raiz.
+            System.out.println("Libro insertado en el DOM");         
+        }catch (Exception ex){
+            System.out.println("Error en la creación del nodo Hijo.");
+            correcto= -1;       
+        }     
+        return correcto;
+    }
+    
+    
+    public int deleteNode(String titulo){
+        int correcto = 0;
+        System.out.println("Buscando el Libro "+titulo+" para borrarlo.");
+        
+        NodeList listaNodos = miDocumento.getElementsByTagName("titulo");
+        Node unNodo;
+        
+        for (int i = 0; i < listaNodos.getLength(); i++) {
+            unNodo = listaNodos.item(i);
+            if (unNodo.getNodeType() == Node.ELEMENT_NODE){
+                if(unNodo.getChildNodes().item(0).getNodeValue().equals(titulo)){
+                    // value y no name???
+                    System.out.println("Borramdo el Libro ....");
+                    unNodo.getParentNode().removeChild(unNodo);
+                    System.out.println("... Nodo borrado.");
+                }
+                                                   
+            }
+            
+        }
+        
+        
+    }
      
 }
 

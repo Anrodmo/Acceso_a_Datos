@@ -24,11 +24,11 @@ public class Practica1_2 {
             System.out.println("... DOM generado con éxito.\n");
         else
             System.out.println("...Error al creaar el DOM\n");
-        
-       
-        
-        
+             
         acceso.recorreDOMyMuestra();
+        acceso.insertarLibroEnDOM("Vaca","Perro", "enero 20000 ");
+        acceso.recorreDOMyMuestra();
+        
                 
     }
     
