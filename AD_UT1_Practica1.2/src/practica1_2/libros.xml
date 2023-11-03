@@ -3,17 +3,25 @@
     <Libro publicado="1894">
         <Titulo>El Libro de la Jungla</Titulo>
         <Autor>Rudiard Kipling</Autor>
+        <Editorial>Vertice</Editorial>
     </Libro>
     <Libro publicado="2003">
         <Titulo>El Código Da Vinci</Titulo>
         <Autor>Dan Brown</Autor>
+        <Editorial>Vertice</Editorial>
+        <Ediciones>
+            <Primera mes="enero" dia="27">2003</Primera>
+            <Segunda>2004</Segunda>
+        </Ediciones>
     </Libro>
     <Libro publicado="1981">
-        <Titulo>El Nombre de la Rosa</Titulo>
+        <Titulo id="prueba atributo" >El Nombre de la Rosa</Titulo>
         <Autor>Umberto Eco</Autor>
+        <Editorial>Vertice</Editorial>
     </Libro>
     <Libro publicado="1605">
         <Titulo>Don Quijote</Titulo>
         <Autor>Cervantes</Autor>
+        <Editorial>Vertice</Editorial>
     </Libro>
 </Libros>

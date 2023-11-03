@@ -21,13 +21,15 @@ public class Practica1_2 {
         File archivo = new File(ruta);
         
         if(acceso.abrirXMLaDom(archivo) == 1)
-            System.out.println("... DOM generado con éxito.");
+            System.out.println("... DOM generado con éxito.\n");
         else
-            System.out.println("...Error al creaar el DOM");
+            System.out.println("...Error al creaar el DOM\n");
+        
+       
+        
         
         acceso.recorreDOMyMuestra();
-        
-        
+                
     }
     
 }
