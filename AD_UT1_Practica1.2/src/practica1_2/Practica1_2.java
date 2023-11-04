@@ -17,6 +17,9 @@ public class Practica1_2 {
         String ruta ="./src/practica1_2/libros.xml";       
         AccesoDOM acceso = new AccesoDOM();
         System.out.println("================== Práctica 1.1 ========================");
+        System.out.println("Para comprbar que la recursividad recore corectamente el xml he"
+                + "insertado atributos y elemtnos de forma irregular en el XML");
+                
         if(ruta==null)ruta=""; // Evito la PointNullException al crear File
         File archivo = new File(ruta);
         
@@ -27,12 +30,12 @@ public class Practica1_2 {
         System.out.println("\n================== Práctica 1.2 ========================");     
         acceso.recorreDOMyMuestra();
         System.out.println("\n================== Práctica 1.3 Añadir=================="); 
-        acceso.insertarLibroEnDOM("Vaca","Perro", "enero 2000 ");       
+        acceso.insertarLibroEnDOM("Insertado Manulamente","Angel", "noviembre 2023");       
         System.out.println("Mostrando DOM de nuevo para comprobar que se ha insertado con éxito:");
         acceso.recorreDOMyMuestra();
         
         System.out.println("\n================== Práctica 1.3 Eliminar=================");
-        acceso.deleteNode("Vaca");
+        acceso.deleteNode("Insertado Manulamente");
         System.out.println("Mostrando DOM de nuevo para comprobar que se ha borrado con éxito:");
         acceso.recorreDOMyMuestra();
         
