@@ -10,6 +10,14 @@ import java.io.*;//clase File
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.xml.sax.SAXException;
 
 
@@ -232,6 +240,30 @@ public class AccesoDOM {
             correcto=-1;
         }
         return correcto;
+    }
+    
+    public void guardarDOMcomoArchivo(String ruta){
+        try{
+            Source src = new DOMSource(miDocumento); // definimos el origen
+            StreamResult srt = new StreamResult(new File(ruta)); // definimos el resultado
+            Transformer tranformador = TransformerFactory.newInstance().newTransformer();
+            
+            // Opción para indentar el archivo
+            tranformador.setOutputProperty(OutputKeys.INDENT, "yes");
+            
+            tranformador.transform(src, (javax.xml.transform.Result)srt);
+            
+            System.out.println("Archivo creado con exito.");
+            
+        } catch (TransformerConfigurationException ex) {
+            System.out.println(ex);
+        } catch (TransformerException ex) {
+            System.out.println(ex);
+        }
+        
+        
+        
+        
     }
      
 }

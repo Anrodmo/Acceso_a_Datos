@@ -14,7 +14,8 @@ public class Practica1_2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        String ruta ="./src/practica1_2/libros.xml";       
+        String ruta ="./src/practica1_2/libros.xml";
+        String ruta2 ="./src/practica1_2/libros2.xml";     
         AccesoDOM acceso = new AccesoDOM();
         System.out.println("================== Práctica 1.1 ========================");
         System.out.println("Para comprbar que la recursividad recore corectamente el xml he"
@@ -38,6 +39,11 @@ public class Practica1_2 {
         acceso.deleteNode("Insertado Manulamente");
         System.out.println("Mostrando DOM de nuevo para comprobar que se ha borrado con éxito:");
         acceso.recorreDOMyMuestra();
+        
+        System.out.println("\n================== Práctica 1.4 Grabar===================");
+        acceso.insertarLibroEnDOM("Insertado Manulamente","Angel", "noviembre 2023");
+        acceso.recorreDOMyMuestra();
+        acceso.guardarDOMcomoArchivo(ruta2);
         
                 
     }
