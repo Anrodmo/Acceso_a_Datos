@@ -89,7 +89,7 @@ public class BooksSAXhandler extends DefaultHandler{
         car = car.replaceAll("\n", "");
         car= car.replaceAll("[^A-Za-z0-9]+", " "); // se ve que hay cosas que no son 
         // ni numero ni digito ni \t ni \n, con esta expresion regular que enconetro en stackoverflow
-        // lo cambia todo por un espacio en blanco.
+        // lo cambia todo por un espacio en blanco. Esto solo sucede en la descripcion.
         System.out.print(car);
     }
 
