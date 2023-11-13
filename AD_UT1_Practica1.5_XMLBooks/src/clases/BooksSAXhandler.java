@@ -7,10 +7,10 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 
-public class LibrosSAXhandler extends DefaultHandler{ 
+public class BooksSAXhandler extends DefaultHandler{ 
     
     private int contadorLibros;
-    public LibrosSAXhandler(){
+    public BooksSAXhandler(){
         this.contadorLibros=0;
     }
 
@@ -87,6 +87,9 @@ public class LibrosSAXhandler extends DefaultHandler{
         String car = new String(ch,start,lenght);
         car = car.replaceAll("\t", "");
         car = car.replaceAll("\n", "");
+        car= car.replaceAll("[^A-Za-z0-9]+", " "); // se ve que hay cosas que no son 
+        // ni numero ni digito ni \t ni \n, con esta expresion regular que enconetro en stackoverflow
+        // lo cambia todo por un espacio en blanco.
         System.out.print(car);
     }
 

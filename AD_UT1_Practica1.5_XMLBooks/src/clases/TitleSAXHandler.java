@@ -8,10 +8,10 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @author anrod
  */
-public class TituloSAXHandler extends DefaultHandler{
+public class TitleSAXHandler extends DefaultHandler{
     private String etiqueta;
     
-    public TituloSAXHandler(){
+    public TitleSAXHandler(){
         this.etiqueta="";
     }
     

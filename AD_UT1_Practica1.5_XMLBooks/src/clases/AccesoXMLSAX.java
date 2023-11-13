@@ -10,7 +10,7 @@ import org.xml.sax.SAXException;
 
 /**
  * Con esta clase parsearemos el documento XML utilizando el hander que hemos 
- * creado en LibrosSAXhandler
+ creado en BooksSAXhandler
  * @author anrod
  */
 public class AccesoXMLSAX {
@@ -27,7 +27,7 @@ public class AccesoXMLSAX {
         try{
             SAXParserFactory factory = SAXParserFactory.newInstance();
             parser = factory.newSAXParser();
-            LibrosSAXhandler sh = new LibrosSAXhandler();
+            BooksSAXhandler sh = new BooksSAXhandler();
             parser.parse(f, sh);
             
         }catch (IOException | ParserConfigurationException | SAXException e){
@@ -50,7 +50,7 @@ public class AccesoXMLSAX {
         try{
             SAXParserFactory factory= SAXParserFactory.newInstance();
             parser=factory.newSAXParser();
-            TituloSAXHandler sh = new TituloSAXHandler();
+            TitleSAXHandler sh = new TitleSAXHandler();
             parser.parse(f, sh);
             
         }catch (IOException | ParserConfigurationException | SAXException e){

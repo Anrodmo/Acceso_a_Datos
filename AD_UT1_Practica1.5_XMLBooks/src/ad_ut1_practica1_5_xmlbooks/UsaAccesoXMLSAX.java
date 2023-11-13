@@ -17,11 +17,11 @@ public class UsaAccesoXMLSAX {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        File f=new File("./src/ad_ut1_practica1_5_xmlbooks/libros.xml");
+        File f=new File("./src/ad_ut1_practica1_5_xmlbooks/Books.xml");
         
         
         // La primera aprte de la práctica
-        AccesoXMLSAX a  = new AccesoXMLSAX();
+        AccesoXMLSAX a = new AccesoXMLSAX();
         a.parsearXMLconLibrosSAXhandler(f);
         
         // La  segunda parte de la  prática

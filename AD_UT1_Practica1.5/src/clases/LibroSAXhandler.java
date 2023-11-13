@@ -7,10 +7,10 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 
-public class LibrosSAXhandler extends DefaultHandler{ 
+public class LibroSAXhandler extends DefaultHandler{ 
     
     private int contadorLibros;
-    public LibrosSAXhandler(){
+    public LibroSAXhandler(){
         this.contadorLibros=0;
     }
 
