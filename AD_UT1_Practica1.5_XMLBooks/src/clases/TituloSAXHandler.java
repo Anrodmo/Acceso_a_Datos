@@ -17,19 +17,20 @@ public class TituloSAXHandler extends DefaultHandler{
     
     @Override
     public void startDocument() {
-        System.out.println("LISTADO DE TITULOS");
+        System.out.println("  LIST OF TITLES  ");
         System.out.println("==================");
     }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        if (qName.equals("Libro")){
-            etiqueta ="Libro";
-        }else if (qName.equals("Titulo")){
-            etiqueta ="Titulo";
-        }else if (qName.equals("Autor")){
-            etiqueta ="Autor";
-        }
+        if (qName.equals("book")){
+            etiqueta ="book";
+        }else if (qName.equals("author")){
+            etiqueta ="author";
+        }else if (qName.equals("title")){
+            etiqueta ="title";
+        }else
+            etiqueta = "none";
     }
     
     
@@ -45,18 +46,18 @@ public class TituloSAXHandler extends DefaultHandler{
      */
     @Override
     public void characters(char[] ch, int start, int lenght) throws SAXException{
-        if(etiqueta.equals("Titulo")){
+        if(etiqueta.equals("title")){
             String car = new String(ch,start,lenght);
             car = car.replaceAll("\t", "");
             car = car.replaceAll("\n", "");
             car=car.trim();
-            System.out.print(" | "+car+" ");           
-        }else if(etiqueta.equals("Autor")){
+            System.out.print(car+" ");           
+        }else if(etiqueta.equals("author")){
             String car = new String(ch,start,lenght);
             car = car.replaceAll("\t", "");
             car = car.replaceAll("\n", "");
             car=car.trim();
-            System.out.print(car);           
+            System.out.print(" | "+car);           
         }
         
     }
@@ -71,7 +72,7 @@ public class TituloSAXHandler extends DefaultHandler{
      */
     @Override
     public void endElement (String uri, String local, String qName) throws SAXException{
-        if(qName.equals("Libro")){
+        if(qName.equals("book")){
             System.out.print("\n");
         }
     }
