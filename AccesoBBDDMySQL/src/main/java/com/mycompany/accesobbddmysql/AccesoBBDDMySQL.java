@@ -5,6 +5,7 @@
 
 package com.mycompany.accesobbddmysql;
 
+import com.sun.jdi.connect.Connector;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -28,7 +29,7 @@ public class AccesoBBDDMySQL {
     public static void main(String[] args) {
         
         String query = "SELECT * FROM videojuego";
-        
+      
         try (Connection miConexion = DriverManager.getConnection(DB_URL,USER,PASS);) {
             
             Statement argumento = miConexion.createStatement();
@@ -49,10 +50,10 @@ public class AccesoBBDDMySQL {
             
             query ="DELETE FROM videojuego WHERE nombre = 'wow'";
             argumento.executeUpdate(query);
-            
+            argumento.close();
             
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace();           
         }
         
         
