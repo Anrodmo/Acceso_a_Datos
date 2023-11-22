@@ -30,9 +30,11 @@ public class ConexionBD {
         System.out.println("Existe el juego wow ? ->"+Videojuego.buscaNombre("wow"));
         System.out.println("Existe el juego CoD ? ->"+Videojuego.buscaNombre("CoD"));
         
-        Videojuego.nuevoRegistro("wow3", null, fecha, "Blizzard", 69.99f);
+        System.out.println("registro con exito ? "+
         
+        Videojuego.nuevoRegistro("wow4", null, fecha, null, 69.99f)
         
+        );
         
         
         
