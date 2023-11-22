@@ -5,14 +5,11 @@
 
 package com.mycompany.accesobbddmysql;
 
-import com.sun.jdi.connect.Connector;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -20,15 +17,15 @@ import java.util.logging.Logger;
  */
 public class AccesoBBDDMySQL {
     
-    static final String DB_URL = "jdbc:mysql://localhost:3306/videojuegos";
-    static final String USER = "angel33";
-    static final String PASS = "angel33";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/jcvd";
+    static final String USER = "dam";
+    static final String PASS = "dam";
     
       
 
     public static void main(String[] args) {
         
-        String query = "SELECT * FROM videojuego";
+        String query = "SELECT * FROM videojuegos";
       
         try (Connection miConexion = DriverManager.getConnection(DB_URL,USER,PASS);) {
             
@@ -37,18 +34,22 @@ public class AccesoBBDDMySQL {
             
             while (resultado.next()){
                 System.out.print("EL id es : "+resultado.getInt("id"));
-                System.out.print(", EL nombre es : "+resultado.getString("nombre"));
-                System.out.print(", EL genero es : "+resultado.getString("genero"));
-                System.out.print(", la fecha de lanzamiento es : "+resultado.getDate("fecha_lanzamiento"));
-                System.out.print(", La compañia es : "+resultado.getString("compañia"));
-                System.out.println(", EL precio es : "+resultado.getFloat("precio"));
+                System.out.print(", EL nombre es : "+resultado.getString("Nombre"));
+                System.out.print(", EL genero es : "+resultado.getString("Genero"));
+                System.out.print(", la fecha de lanzamiento es : "+resultado.getDate("FechaLanzamiento"));
+                System.out.print(", La compañia es : "+resultado.getString("Compañia"));
+                System.out.println(", EL precio es : "+resultado.getFloat("Precio"));
                 
             }
-//            query = "INSERT INTO videojuego (nombre,genero,fecha_lanzamiento,compañia,precio)" 
-//                    + "VALUES('wow classic','MMORPG','2012-02-25', 'Blizzaard',34.95)";
+//            query = "INSERT INTO videojuegos (Nombre,Genero,FechaLanzamiento,Compañia,Precio)" 
+//                    + "VALUES('wow classic','MMORPG','2012-02-25', 'Blizzard',34.95)";
 //            argumento.executeUpdate(query);
-            
-            query ="DELETE FROM videojuego WHERE nombre = 'wow'";
+
+//            query = "INSERT INTO videojuegos (Nombre,Genero,FechaLanzamiento,Compañia,Precio)" 
+//                    + "VALUES('wow ','MMORPG','2004-02-25', 'Blizzard',34.95)";
+//            argumento.executeUpdate(query);
+
+            query ="DELETE FROM videojuegos WHERE nombre = 'wow'";
             argumento.executeUpdate(query);
             argumento.close();
             
@@ -57,8 +58,7 @@ public class AccesoBBDDMySQL {
         }
         
         
-        System.out.println("Hello World!");
         
-        //Connection miConexion
+        
     }
 }
