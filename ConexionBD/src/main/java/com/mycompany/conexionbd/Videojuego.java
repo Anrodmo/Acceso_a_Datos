@@ -4,6 +4,7 @@ package com.mycompany.conexionbd;
 import static com.mycompany.conexionbd.ConexionBD.DB_URL;
 import static com.mycompany.conexionbd.ConexionBD.PASS;
 import static com.mycompany.conexionbd.ConexionBD.USER;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -78,17 +79,18 @@ public class Videojuego {
      * @return True -> Si hay al menos un resultado, False -> en caso contrario.
      */
     static public boolean buscaNombre(String nombre){
-        boolean correcto= false;
+        boolean existe= false;
         //String query = "SELECT Nombre FROM videojuegos WHERE Nombre = '"+nombre+"'";
         String query = "SELECT Nombre FROM videojuegos WHERE Nombre = ?";         
         try (Connection miConexion = DriverManager.getConnection(DB_URL,USER,PASS);
                 PreparedStatement argumento = miConexion.prepareStatement(query);) {
             argumento.setString(1, nombre);
-            correcto = argumento.execute(query);            
+            ResultSet resultado = argumento.executeQuery();
+            existe=resultado.next();
         }catch (SQLException ex) {
             ex.printStackTrace();            
         }                 
-        return correcto;
+        return existe;
     }
     
     /**
@@ -100,8 +102,7 @@ public class Videojuego {
         try (Connection miConexion = DriverManager.getConnection(DB_URL,USER,PASS);
                 Statement argumento = miConexion.createStatement();) {                  
             ResultSet resultado = argumento.executeQuery(consulta); 
-            
-            
+                       
             // Esto funciona solo si la consulta es *
 //            while (resultado.next()){            
 //                System.out.print("EL id es : "+resultado.getInt("id"));
@@ -115,13 +116,14 @@ public class Videojuego {
             ResultSetMetaData  metadatos = resultado.getMetaData();
             int numeroColumnas = metadatos.getColumnCount();
             
-            while (resultado.next()){
-                for (int i = 0; i < numeroColumnas; i++) {
-                    String nombreColumna = metadatos.getColumnLabel(i);
-                    String tipoDato = metadatos.getColumnTypeName(i);
-                    Object valor = resultado.getObject(i);
+            while (resultado.next()){              
+                for (int i = 0; i < numeroColumnas; i++) {                  
+                    String nombreColumna = metadatos.getColumnLabel(i+1);
+                    String tipoDato = metadatos.getColumnTypeName(i+1);
+                    Object valor = resultado.getObject(i+1);
                     Videojuego.muestraDato(nombreColumna, tipoDato, valor);
-                }                              
+                }
+                System.out.println("");
             }            
         } catch (SQLException ex) {
             ex.printStackTrace();           
@@ -137,12 +139,14 @@ public class Videojuego {
     private static void muestraDato(String nombreCol, String tipoDato, Object valor){
         if(valor == null){
             System.out.print(nombreCol+": valor nulo, ");
-        }else if (tipoDato.equals("CHAR")){
+        }else if (tipoDato.equals("VARCHAR")){
             System.out.print(nombreCol+": "+( (String)valor) +", ");
         }else if (tipoDato.equals("DATE")){
             System.out.print(nombreCol+": "+( (Date)valor) +", ");
         }else if (tipoDato.equals("DECIMAL")){
-            System.out.print(nombreCol+": "+( (Float)valor) +", ");
+            System.out.print(nombreCol+": "+( (BigDecimal)valor) +", ");
+        }else if (tipoDato.equals("INT")){
+            System.out.print(nombreCol+": "+( (int)valor) +", ");
         }
         
         

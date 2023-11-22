@@ -27,6 +27,8 @@ public class ConexionBD {
             
         
         Videojuego.muestraConsulta(query);
+        System.out.println("Existe el juego wow ? ->"+Videojuego.buscaNombre("wow"));
+        System.out.println("Existe el juego CoD ? ->"+Videojuego.buscaNombre("CoD"));
         
         //nuevoRegistro("wow3", "actionRPG", fecha, "Blizzard", 69.99f);
         
