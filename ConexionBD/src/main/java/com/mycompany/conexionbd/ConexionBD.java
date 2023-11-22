@@ -30,7 +30,7 @@ public class ConexionBD {
         System.out.println("Existe el juego wow ? ->"+Videojuego.buscaNombre("wow"));
         System.out.println("Existe el juego CoD ? ->"+Videojuego.buscaNombre("CoD"));
         
-        //nuevoRegistro("wow3", "actionRPG", fecha, "Blizzard", 69.99f);
+        Videojuego.nuevoRegistro("wow3", null, fecha, "Blizzard", 69.99f);
         
         
         
@@ -47,34 +47,7 @@ public class ConexionBD {
     
     
     
-    static private boolean nuevoRegistro(String nombre,String genero, LocalDate fechaLanzamiento,
-            String compañia, float precio){
-        boolean correcto = false;
-        String fecha = fechaLanzamiento.getYear()+"-"+fechaLanzamiento.getMonthValue()+"-"
-                +fechaLanzamiento.getDayOfMonth();
-        
-        String query = "INSERT INTO videojuegos (Nombre,genero,FechaLanzamiento,Compañia,Precio)" 
-                    + "VALUES(?,?,?,?,?)";
-        
-//        String query = "INSERT INTO videojuegos (Nombre,genero,FechaLanzamiento,Compañia,Precio)" 
-//                    + "VALUES('"+nombre+"','"+genero+"','"+fecha+"', '"+compañia+"',"+precio+")";
-        
-        try (Connection miConexion = DriverManager.getConnection(DB_URL,USER,PASS);
-                PreparedStatement argumento = miConexion.prepareStatement(query);) {
-            argumento.setString(1, nombre);
-            argumento.setString(2, genero);
-            argumento.setDate(3, java.sql.Date.valueOf(fechaLanzamiento) );
-            argumento.setString(4, compañia);
-            argumento.setFloat(5, precio);
-            
-            
-            argumento.executeUpdate(query);
-        
-        } catch (SQLException ex) {
-            ex.printStackTrace();           
-        }       
-        return correcto;
-    }
+    
     
     
     
