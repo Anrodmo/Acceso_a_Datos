@@ -5,15 +5,11 @@ import static com.mycompany.conexionbd.ConexionBD.DB_URL;
 import static com.mycompany.conexionbd.ConexionBD.PASS;
 import static com.mycompany.conexionbd.ConexionBD.USER;
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 
 public class Videojuego {
@@ -94,8 +90,8 @@ public class Videojuego {
     }
     
     /**
-     * Mñetodo  que lanza la consulta introducida y la muestra por pantalla.
-     * @param consulta
+     * Método  que lanza la consulta introducida y la muestra por pantalla.
+     * @param consulta String
      */
     static public void muestraConsulta(String consulta){
         
@@ -154,40 +150,210 @@ public class Videojuego {
     }
     
     /**
-     * Mñetodo que inserta un nuevo videojuego en la BBDD
-     * @param nombre
-     * @param genero
-     * @param fechaLanzamiento
-     * @param compañia
-     * @param precio
-     * @return
+     * Método que inserta un nuevo videojuego en la BBDD
+     * @param nombre String not null
+     * @param genero String
+     * @param fechaLanzamiento LocalDate
+     * @param compañia String
+     * @param precio Float
+     * @return True -> operacion correcta, False -> caso contrario.
      */
     static public boolean nuevoRegistro(String nombre,String genero, LocalDate fechaLanzamiento,
-            String compañia, float precio){
+            String compañia, Float precio){
         boolean correcto = false;
-//        String fecha = fechaLanzamiento.getYear()+"-"+fechaLanzamiento.getMonthValue()+"-"
-//                +fechaLanzamiento.getDayOfMonth();
-        precio = Math.round(precio*100)/100f;  // redondeamos a dos decimales
-        String query = "INSERT INTO videojuegos (Nombre,genero,FechaLanzamiento,Compañia,Precio)" 
-                    + "VALUES(?,?,?,?,?)";
+
+        if(nombre != null){  // en la  BBDD nombre es  obligatorio por lo tanto si viene null ni intamos el insert
+            if(precio != null)
+                precio = Math.round(precio*100)/100f;  // redondeamos a dos decimales
+            String query = "INSERT INTO videojuegos (Nombre,genero,FechaLanzamiento,Compañia,Precio)" 
+                        + "VALUES(?,?,?,?,?)";
         
 //        String query = "INSERT INTO videojuegos (Nombre,genero,FechaLanzamiento,Compañia,Precio)" 
 //                    + "VALUES('"+nombre+"','"+genero+"','"+fecha+"', '"+compañia+"',"+precio+")";
         
-        try (Connection miConexion = DriverManager.getConnection(DB_URL,USER,PASS);
-                PreparedStatement argumento = miConexion.prepareStatement(query);) {
-            argumento.setString(1, nombre);
-            argumento.setString(2, genero);
-            argumento.setDate(3, java.sql.Date.valueOf(fechaLanzamiento) );
-            argumento.setString(4, compañia);
-            argumento.setFloat(5, precio);
-                       
-            correcto = argumento.executeUpdate() == 1;
-        
-        } catch (SQLException ex) {
-            ex.printStackTrace();           
-        }       
+            try (Connection miConexion = DriverManager.getConnection(DB_URL,USER,PASS);
+                    PreparedStatement argumento = miConexion.prepareStatement(query);) {
+                argumento.setString(1, nombre);
+                argumento.setString(2, genero);
+                argumento.setDate(3, java.sql.Date.valueOf(fechaLanzamiento) );
+                argumento.setString(4, compañia);
+                argumento.setFloat(5, precio);
+
+                correcto = argumento.executeUpdate() == 1;
+            } catch (SQLException ex) {
+                ex.printStackTrace();           
+            }                 
+        }            
         return correcto;
+    }
+    
+    /**
+     * Pide al usuario los datos de un nuevo videojuego por consola, los asigna al objeto
+     * Videojuego y si todo es correcto lo añade a la BBDD
+     * @return True -> Videojuego  añadido con éxito a la BBDD, False -> caso contrario.
+     */
+    public boolean nuevoRegistro(){
+         
+        System.out.println("-----------------------------------------------");
+        System.out.println("introduzca los datos de un nuevo juego.");
+        
+        this.setNombre(pedirNombre());      
+        this.setGenero(pedirDatoString("Genero"));    
+        this.setFechaLanzamiento(pedirFechaPublicacion());  
+        this.setGenero(pedirDatoString("Compañia")); 
+        this.setPrecio(pedirPrecio());
+               
+        return Videojuego.nuevoRegistro(this.nombre, this.genero, 
+                this.fechaLanzamiento, this.compañia, this.precio);
+    }
+    
+    /**
+     * Método que pide el nombre del videojuego, al ser campo obligatorio reitera hasta
+     * que se introduce uno.
+     * @return String valor
+     */
+    private String pedirNombre (){
+        String  nombre;
+        Scanner teclado = new Scanner(System.in);       
+        do{           
+            System.out.print("Nombre del juego ->");
+            nombre=teclado.nextLine();
+            nombre = nombre.trim();
+            if(nombre.length() == 0)
+                System.out.println("El nombre es obligatorio");                     
+        }while (nombre.length() == 0);
+        return nombre;
+    }
+    
+    /**
+     * Método auxiliar que pide un dato de texto por teclado y lo devuelve
+     * @param dato String , el dato a a pedir
+     * @return String valor introducido por teclado  o null si no se introduce nada
+     */
+    private String pedirDatoString (String dato){
+        String valor;
+        Scanner teclado = new Scanner(System.in);
+        
+        System.out.print(dato+" -> ");
+        valor=teclado.nextLine();
+        valor = valor.trim();
+        if(valor.length()==0)
+            valor=null;
+        return valor;
+    }
+    
+    /**
+     * Método auxiliar que pide la fecha de publicación y comprueba que es válida.
+     * Para ser válida debe ser 1980+ (es  un videojuego) y anterior a año actual
+     * y la fecha debe ser una fecha  válida. Devuelve null si el usuario no la quiere
+     * establecer.
+     * @return LocalDate con la fecha de publicacion o null
+     */
+    private  LocalDate pedirFechaPublicacion(){
+        Scanner teclado = new Scanner(System.in);
+        LocalDate fecha= null;
+        int año=0,mes=0,dia;
+        do{            
+            System.out.println("Ahota vamos a introducir la fecha, introduzca 0 "
+                    + "para omitir este paso.");
+            System.out.print("Año -> "); 
+            
+            try{
+                año = teclado.nextInt();
+                if(año != 0 && (año<1980 || año >=  LocalDate.now().getYear()) ){
+                    System.out.println("El año "+año+" no es válido");                               
+                }           
+            }catch (InputMismatchException ex){
+                System.out.println("Error, debe introducir un año o 'intro' para saltar fecha");
+                año=0;
+            }           
+        }while (año != 0 && ( año<1980 || año >=  LocalDate.now().getYear()) );
+         
+        if(año !=0){
+            do{
+                System.out.print("Mes (1-12) -> ");
+                mes = teclado.nextInt();
+                if (mes<0 || mes >12)
+                    System.out.println("El mes nº "+mes+" no es válido.");                
+            }while (mes<0 || mes >12);            
+        }
+        
+        if(año !=0){
+            boolean fechaCorrecta;
+            do{                   
+                System.out.println("Día (1-29,30 o 31) -> ");
+                dia = teclado.nextInt();
+                //DateTimeFormatter miFormto = DateTimeFormatter.ofPattern("yyy-MM-dd");
+                try{
+                fecha = LocalDate.of(año,mes,dia);
+                fechaCorrecta = true;
+                }catch (DateTimeException ex){
+                    fechaCorrecta = false;
+                    System.out.println("El día "+dia+" no es válido para el año "+año+" y mes "+mes);
+                }                               
+            }while(!fechaCorrecta);
+        }        
+        return fecha;                  
+    }
+    
+    /**
+     * Método que pide el precio, redondea el  precio a dos decimales.
+     * Cero es null
+     * @return Float con el valor introducido o null
+     */
+    private Float pedirPrecio(){
+        float precio=0;
+        Float retorno;
+        Scanner teclado = new Scanner(System.in);
+        boolean floatCorrecto;
+        do{          
+            System.out.print("Precio ( 0 para omitir ) -> ");
+            try{
+                precio = teclado.nextFloat();               
+                precio = ( Math.round(precio*100))/100f;
+                floatCorrecto=true;
+            }catch (InputMismatchException ex){
+                floatCorrecto= false;
+                teclado.next();
+                System.out.println("Precio incorrecto, recuerde : el separador de decimales es la , ");
+            }          
+        }while (!floatCorrecto);
+        if (precio == 0)
+            retorno = null;
+        else
+            retorno = precio;
+        return retorno;
+    }
+    
+    /**
+     * Método que elimina de la BBDD jcvd y tabla videojuegos las entradas cuyo 
+     * Nomnre coincida con el valor introducido.
+     * @param nombre
+     * @return
+     */
+    static public boolean eliminarRegistro (String nombre){
+        boolean correcto;       
+//        String query = "DELETE FROM videojuegos WHERE Nombre = '"+nombre+"'";
+        if(nombre == null)     // dado que Nombre es obligatorio si se introduce 
+            correcto = false;  // null ya no  hago más.
+        else{
+            String query = "DELETE FROM videojuegos WHERE Nombre = ?";
+         
+            try (Connection miConexion = DriverManager.getConnection(DB_URL,USER,PASS);
+                    PreparedStatement argumento = miConexion.prepareStatement(query);) {
+                argumento.setString(1, nombre);
+                correcto = argumento.executeUpdate(query)>0;            
+            }catch (SQLException ex) {
+                ex.printStackTrace();
+                correcto=false;
+            }                        
+        }
+        return correcto;
+    }
+
+    @Override
+    public String toString() {
+        return "Videojuego{" + "nombre=" + nombre + ", genero=" + genero + ", fechaLanzamiento=" + fechaLanzamiento + ", compa\u00f1ia=" + compañia + ", precio=" + precio + '}';
     }
     
     
