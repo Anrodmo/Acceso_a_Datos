@@ -55,11 +55,7 @@ public class ConexionBD {
         System.out.println("Añadido manual con éxito ? :" +juego.nuevoRegistro());
         System.out.println("=======================Mostramos para ver que se ha insertado:");
         Videojuego.muestraConsulta(query);
-            
-            
-        
-        
-        
+       
         
         
     }

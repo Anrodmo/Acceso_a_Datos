@@ -38,7 +38,7 @@ public class Videojuego {
     }
 
     public void setGenero(String genero) {
-        if(genero.length()>25)
+        if(genero != null && genero.length()>25)
             genero = genero.substring(0, 25);
         this.genero = genero;
     }
@@ -56,6 +56,8 @@ public class Videojuego {
     }
 
     public void setCompañia(String compañia) {
+        if(compañia != null && genero.length()>50)
+            compañia = compañia.substring(0, 50);
         this.compañia = compañia;
     }
 
@@ -64,7 +66,8 @@ public class Videojuego {
     }
 
     public void setPrecio(Float precio) {
-        precio = Math.round(precio*100)/100f;
+        if(precio!= null)
+            precio = Math.round(precio*100)/100f;
         this.precio = precio;
     }
     
@@ -202,8 +205,9 @@ public class Videojuego {
         System.out.println("-----------------------------------------------");
         System.out.println("introduzca los datos de un nuevo juego.");
         
-        this.setNombre(pedirNombre());      
-        this.setGenero(pedirDatoString("Genero"));    
+        this.setNombre(pedirNombre());  
+        String cadena =pedirDatoString("Genero");
+        this.setGenero(cadena);    
         this.setFechaLanzamiento(pedirFechaPublicacion());  
         this.setGenero(pedirDatoString("Compañia")); 
         this.setPrecio(pedirPrecio());
@@ -224,9 +228,9 @@ public class Videojuego {
             System.out.print("Nombre del juego ->");
             nombre=teclado.nextLine();
             nombre = nombre.trim();
-            if(nombre.length() == 0)
+            if(nombre == null || nombre.length() == 0)
                 System.out.println("El nombre es obligatorio");                     
-        }while (nombre.length() == 0);
+        }while (nombre == null || nombre.length() == 0);
         return nombre;
     }
     
@@ -242,7 +246,7 @@ public class Videojuego {
         System.out.print(dato+" -> ");
         valor=teclado.nextLine();
         valor = valor.trim();
-        if(valor.length()==0)
+        if( valor == null || valor.length()==0)
             valor=null;
         return valor;
     }
