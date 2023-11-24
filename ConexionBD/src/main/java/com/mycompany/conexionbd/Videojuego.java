@@ -175,10 +175,15 @@ public class Videojuego {
                     PreparedStatement argumento = miConexion.prepareStatement(query);) {
                 argumento.setString(1, nombre);
                 argumento.setString(2, genero);
-                argumento.setDate(3, java.sql.Date.valueOf(fechaLanzamiento) );
                 argumento.setString(4, compañia);
-                argumento.setFloat(5, precio);
-
+                if(fechaLanzamiento != null)
+                    argumento.setDate(3, java.sql.Date.valueOf(fechaLanzamiento));
+                else
+                    argumento.setNull(3, java.sql.Types.DATE);
+                if(precio !=null)
+                    argumento.setFloat(5, precio);
+                else
+                    argumento.setNull(5, java.sql.Types.FLOAT);
                 correcto = argumento.executeUpdate() == 1;
             } catch (SQLException ex) {
                 ex.printStackTrace();           
@@ -260,14 +265,14 @@ public class Videojuego {
             
             try{
                 año = teclado.nextInt();
-                if(año != 0 && (año<1980 || año >=  LocalDate.now().getYear()) ){
+                if(año != 0 && (año<1980 || año > LocalDate.now().getYear()) ){
                     System.out.println("El año "+año+" no es válido");                               
                 }           
             }catch (InputMismatchException ex){
                 System.out.println("Error, debe introducir un año o 'intro' para saltar fecha");
                 año=0;
             }           
-        }while (año != 0 && ( año<1980 || año >=  LocalDate.now().getYear()) );
+        }while (año != 0 && ( año<1980 || año > LocalDate.now().getYear()) );
          
         if(año !=0){
             do{
@@ -342,7 +347,7 @@ public class Videojuego {
             try (Connection miConexion = DriverManager.getConnection(DB_URL,USER,PASS);
                     PreparedStatement argumento = miConexion.prepareStatement(query);) {
                 argumento.setString(1, nombre);
-                correcto = argumento.executeUpdate(query)>0;            
+                correcto = argumento.executeUpdate()>0;            
             }catch (SQLException ex) {
                 ex.printStackTrace();
                 correcto=false;
