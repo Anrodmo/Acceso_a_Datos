@@ -4,6 +4,7 @@ package com.mycompany.conexionbd;
 import static com.mycompany.conexionbd.ConexionBDEx.DB_URL;
 import static com.mycompany.conexionbd.ConexionBDEx.PASS;
 import static com.mycompany.conexionbd.ConexionBDEx.USER;
+import static com.mycompany.conexionbd.ConexionBDEx.poolDeConexiones;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.DateTimeException;
@@ -377,6 +378,19 @@ public class Videojuego {
     }
     
     
-    
+    static public boolean buscaNombre2(String nombre){
+        boolean existe= false;
+        //String query = "SELECT Nombre FROM videojuegos WHERE Nombre = '"+nombre+"'";
+        String query = "SELECT Nombre FROM videojuegos WHERE Nombre = ?";         
+        try (Connection miConexion = poolDeConexiones.getConnection();
+                PreparedStatement argumento = miConexion.prepareStatement(query);) {
+            argumento.setString(1, nombre);
+            ResultSet resultado = argumento.executeQuery();
+            existe=resultado.next();
+        }catch (SQLException ex) {
+            ex.printStackTrace();            
+        }                 
+        return existe;
+    }
     
 }

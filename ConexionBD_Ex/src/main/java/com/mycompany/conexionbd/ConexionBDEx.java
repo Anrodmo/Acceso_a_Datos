@@ -26,14 +26,17 @@ public class ConexionBDEx {
         try {
             String query = "SELECT * FROM videojuegos";
             
-            poolDeConexiones.setConnectionFactoryClassName("com.mysql.jdbc.Driver");
+            poolDeConexiones.setConnectionFactoryClassName("com.mysql.cj.jdbc.Driver");
             poolDeConexiones.setURL(DB_URL);
             poolDeConexiones.setUser(USER);
             poolDeConexiones.setPassword(PASS);
             
             
             
-            
+            System.out.println("Existe el juego wow ? ->"+Videojuego.buscaNombre2("wow"));
+            System.out.println("===============");
+            System.out.println("===============");
+            System.out.println("===============");
             
             System.out.println("============== Método para mostrar consulta por parámetro de entrada ==============");
             System.out.println("               Mostramos una consulta *");
