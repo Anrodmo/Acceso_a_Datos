@@ -7,18 +7,23 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import oracle.ucp.jdbc.PoolDataSource;
+import oracle.ucp.jdbc.PoolDataSourceFactory;
 
 
-public class ConexionBD {
+public class ConexionBDEx {
     
     static final String DB_URL = "jdbc:mysql://localhost:3306/jcvd";
     static final String USER = "dam";  
-    static final String PASS = "dam";  
+    static final String PASS = "dam";
+    
+    static final PoolDataSource poolDeConexiones = PoolDataSourceFactory.getPoolDataSource();
+    
 
     public static void main(String[] args) {
         String query = "SELECT * FROM videojuegos";
         LocalDate fecha = LocalDate.now();
-            
+        
         System.out.println("============== Método para mostrar consulta por parámetro de entrada ==============");
         System.out.println("               Mostramos una consulta *");        
         Videojuego.muestraConsulta(query);

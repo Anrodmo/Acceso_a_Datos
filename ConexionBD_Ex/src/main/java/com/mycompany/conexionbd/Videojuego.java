@@ -1,15 +1,25 @@
 
 package com.mycompany.conexionbd;
 
-import static com.mycompany.conexionbd.ConexionBD.DB_URL;
-import static com.mycompany.conexionbd.ConexionBD.PASS;
-import static com.mycompany.conexionbd.ConexionBD.USER;
+import static com.mycompany.conexionbd.ConexionBDEx.DB_URL;
+import static com.mycompany.conexionbd.ConexionBDEx.PASS;
+import static com.mycompany.conexionbd.ConexionBDEx.USER;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+
+/*
+Si quiero recuperar las claves generadas en un insert, si es autogenerado 
+se puede con el método  
+PreparedStatement argumento = miConexion.prepareStatement(query , 
+    Preparedstatement.RETURN_GEENERATED_KEYS );
+y para recuperar:
+ResultSet resultado = argumento.getGeneratedKeys();
+*/
 
 
 public class Videojuego {
@@ -147,9 +157,7 @@ public class Videojuego {
         }else if (tipoDato.equals("INT")){
             System.out.print(nombreCol+": "+( (int)valor) +", ");
         }
-        
-        
-        
+                      
     }
     
     /**
@@ -157,9 +165,9 @@ public class Videojuego {
      * @param nombre String not null
      * @param genero String
      * @param fechaLanzamiento LocalDate
-     * @param compañia String
+     * @param compañia String   
      * @param precio Float
-     * @return True -> operacion correcta, False -> caso contrario.
+     * @return True -> Operacion correcta, False -> caso contrario.
      */
     static public boolean nuevoRegistro(String nombre,String genero, LocalDate fechaLanzamiento,
             String compañia, Float precio){
@@ -168,11 +176,14 @@ public class Videojuego {
         if(nombre != null){  // en la  BBDD nombre es  obligatorio por lo tanto si viene null ni intamos el insert
             if(precio != null)
                 precio = Math.round(precio*100)/100f;  // redondeamos a dos decimales
-            String query = "INSERT INTO videojuegos (Nombre,genero,FechaLanzamiento,Compañia,Precio)" 
-                        + "VALUES(?,?,?,?,?)";
+//            String query = "INSERT INTO videojuegos (Nombre,genero,FechaLanzamiento,Compañia,Precio)" 
+//                        + "VALUES(?,?,?,?,?)";
+            
+                String query = "INSERT INTO videojuegos " 
+                            + "VALUES(null,?,?,?,?,?)";
         
-//        String query = "INSERT INTO videojuegos (Nombre,genero,FechaLanzamiento,Compañia,Precio)" 
-//                    + "VALUES('"+nombre+"','"+genero+"','"+fecha+"', '"+compañia+"',"+precio+")";
+    //        String query = "INSERT INTO videojuegos (Nombre,genero,FechaLanzamiento,Compañia,Precio)" 
+    //                    + "VALUES('"+nombre+"','"+genero+"','"+fecha+"', '"+compañia+"',"+precio+")";
         
             try (Connection miConexion = DriverManager.getConnection(DB_URL,USER,PASS);
                     PreparedStatement argumento = miConexion.prepareStatement(query);) {
