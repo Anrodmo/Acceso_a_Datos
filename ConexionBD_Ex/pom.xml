@@ -19,15 +19,15 @@
             <version>8.0.28</version>
         </dependency>
         <dependency>
-        <groupId>com.oracle.database.jdbc</groupId>
-        <artifactId>ojdbc8</artifactId>
-        <version>${oracle.jdbc.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>com.oracle.database.jdbc</groupId>
-        <artifactId>ucp</artifactId>
-        <version>${oracle.jdbc.version}</version>
-    </dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>${oracle.jdbc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ucp</artifactId>
+            <version>${oracle.jdbc.version}</version>
+        </dependency>
     </dependencies>
     <name>ConexionBDEx</name>
 </project>
