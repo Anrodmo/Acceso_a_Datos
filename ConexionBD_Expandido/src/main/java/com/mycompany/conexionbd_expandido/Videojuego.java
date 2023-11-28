@@ -1,9 +1,7 @@
 
-package com.mycompany.conexionbd;
+package com.mycompany.conexionbd_expandido;
 
-import static com.mycompany.conexionbd.ConexionBDEx.DB_URL;
-import static com.mycompany.conexionbd.ConexionBDEx.PASS;
-import static com.mycompany.conexionbd.ConexionBDEx.USER;
+
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.DateTimeException;
@@ -135,7 +133,10 @@ public class Videojuego {
                     Videojuego.muestraDato(nombreColumna, tipoDato, valor);
                 }
                 System.out.println("");
-            }            
+            } 
+            
+            if(!PoolDeConexiones.conexionEsNull())
+                    PoolDeConexiones.cerrarConexion();
         } catch (SQLException ex) {
             ex.printStackTrace();           
         }       
@@ -201,17 +202,17 @@ public class Videojuego {
                 else
                     argumento.setNull(5, java.sql.Types.FLOAT);
                 correcto = argumento.executeUpdate() == 1;
+                
+                if(!PoolDeConexiones.conexionEsNull())
+                    PoolDeConexiones.cerrarConexion();
                            
             } catch (SQLException ex) {
                 ex.printStackTrace();           
             } 
             
-            try {
-                if(PoolDeConexiones.getConexion() != null)
-                    PoolDeConexiones.getConexion();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            
+                
+            
             
         }            
         return correcto;
@@ -373,7 +374,10 @@ public class Videojuego {
             try (Connection miConexion = PoolDeConexiones.getConexion();
                     PreparedStatement argumento = miConexion.prepareStatement(query);) {
                 argumento.setString(1, nombre);
-                correcto = argumento.executeUpdate()>0;            
+                correcto = argumento.executeUpdate()>0;
+                
+                if(!PoolDeConexiones.conexionEsNull())
+                    PoolDeConexiones.cerrarConexion();
             }catch (SQLException ex) {
                 ex.printStackTrace();
                 correcto=false;

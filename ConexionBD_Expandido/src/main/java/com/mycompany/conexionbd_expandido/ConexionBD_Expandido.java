@@ -1,22 +1,26 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Project/Maven2/JavaApp/src/main/java/${packagePath}/${mainClassName}.java to edit this template
+ */
 
+package com.mycompany.conexionbd_expandido;
 
-package com.mycompany.conexionbd;
-
-import java.sql.*;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 
-public class ConexionBDEx {
+/**
+ *
+ * @author anrod
+ */
+public class ConexionBD_Expandido {
     
     static final String DB_URL = "jdbc:mysql://localhost:3306/jcvd";
     static final String USER = "dam";  
     static final String PASS = "dam";
-    
-    
-    
 
     public static void main(String[] args) {
         try {
@@ -66,42 +70,7 @@ public class ConexionBDEx {
             PoolDeConexiones.cerrarConexion();
             
         } catch (SQLException ex) {
-            Logger.getLogger(ConexionBDEx.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
-            
-        
-       
-        
-        
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

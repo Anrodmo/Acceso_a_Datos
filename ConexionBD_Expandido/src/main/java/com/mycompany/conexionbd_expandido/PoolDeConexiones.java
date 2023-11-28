@@ -1,9 +1,10 @@
 
-package com.mycompany.conexionbd;
+package com.mycompany.conexionbd_expandido;
 
-import static com.mycompany.conexionbd.ConexionBDEx.DB_URL;
-import static com.mycompany.conexionbd.ConexionBDEx.PASS;
-import static com.mycompany.conexionbd.ConexionBDEx.USER;
+
+import static com.mycompany.conexionbd_expandido.ConexionBD_Expandido.DB_URL;
+import static com.mycompany.conexionbd_expandido.ConexionBD_Expandido.PASS;
+import static com.mycompany.conexionbd_expandido.ConexionBD_Expandido.USER;
 import java.sql.Connection;
 import java.sql.SQLException;
 import oracle.ucp.jdbc.PoolDataSource;
@@ -32,6 +33,10 @@ public class PoolDeConexiones {
     
     static public void cerrarConexion() throws SQLException{
         conexion.close();
+    }
+    
+    static public boolean conexionEsNull(){
+        return conexion == null;
     }
     
 }
