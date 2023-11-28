@@ -66,8 +66,8 @@ public class ConexionBD_Expandido {
             System.out.println("=======================Mostramos para ver que se ha insertado:");
             Videojuego.muestraConsulta(query);
             
-            
-            PoolDeConexiones.cerrarConexion();
+            if(! PoolDeConexiones.conexionEsNull())
+                PoolDeConexiones.cerrarConexion();
             
         } catch (SQLException ex) {
             ex.printStackTrace();
