@@ -69,9 +69,7 @@ public class ConexionBDEx {
             Logger.getLogger(ConexionBDEx.class.getName()).log(Level.SEVERE, null, ex);
         }
             
-        
        
-        
         
     }
     
