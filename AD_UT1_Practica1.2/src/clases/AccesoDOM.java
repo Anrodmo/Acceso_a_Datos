@@ -5,10 +5,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.*;//for Document
 import org.w3c.dom.Document;
-import java.util.*;
 import java.io.*;//clase File
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
@@ -22,7 +19,7 @@ import org.xml.sax.SAXException;
 
 
 /**
- *
+ * Clase que crea un Document de DOm y tiene los métodos necesarios para su gestión
  * @author anrod
  */
 public class AccesoDOM {
@@ -56,7 +53,7 @@ public class AccesoDOM {
     }
     
     /**
-     * Meñtodo que recorre y muestra en pantalla el atrbuto de la clase Document, 
+     * Método que recorre y muestra en pantalla el atrbuto de la clase Document, 
      * previamente debe haber sido generado con el método abrirXMLaDom. 
      */
     public void recorreDOMyMuestra(){
@@ -68,7 +65,7 @@ public class AccesoDOM {
     }
     
     /**
-     * metodo recursivo que recorre un nodelist y muestra por pantalla el nivel actual y se llama a si mismo 
+     * Metodo recursivo que recorre un nodelist y muestra por pantalla el nivel actual y se llama a si mismo 
      * para mostrar el nivel inferior.
      * @param nodosHijos NodeList
      * @param nivel entero que indica el nivel del elemento para gestionar las tabulaciones al mostrar
@@ -121,9 +118,14 @@ public class AccesoDOM {
      * @param nodo nodo del que se quieren  mostrar los atributos.
      */
     private void recorreAtributosyMuestra(Node nodo){
-        NamedNodeMap atributos= nodo.getAttributes();       
+        // los nodos se tienen que guardar en este tipo de lista
+        NamedNodeMap atributos= nodo.getAttributes();
+        
+        // recorro la lista
         for (int i = 0; i < atributos.getLength(); i++) {
+                                  // del item de la lista consigo el nombre
             System.out.print("  "+atributos.item(i).getNodeName()+" = "+
+                                    // consigo el valor
                     atributos.item(i).getNodeValue());
         } 
     }
@@ -134,10 +136,11 @@ public class AccesoDOM {
      * @return true si alguno de los nodos hijos es un Element, false en caso contrario.
      */
     private boolean hijosSonElementos(NodeList  nodosHijos){
-        boolean tieneHijosElementos=false;
-        for (int i = 0; i < nodosHijos.getLength(); i++) {           
+        boolean tieneHijosElementos=false; // almaceno si tiene hijos elementos
+        for (int i = 0; i < nodosHijos.getLength() && tieneHijosElementos; i++) {    // recorro todos los hijos      
             if(nodosHijos.item(i).getNodeType() == Node.ELEMENT_NODE)
-                tieneHijosElementos = true;                    
+                tieneHijosElementos = true;
+            //si alguno es elemento devuelvo true y finalizo bucle
         }
         return tieneHijosElementos;
     }
@@ -219,17 +222,18 @@ public class AccesoDOM {
         int correcto = 0;
         try{
             System.out.println("Buscando el Libro "+titulo+" para borrarlo.");
-
+            // me guardo todos lo elementos del DOM que se llamen Titulo
             NodeList listaNodos = miDocumento.getElementsByTagName("Titulo");
             Node unNodo;
 
-            for (int i = 0; i < listaNodos.getLength(); i++) {
-                unNodo = listaNodos.item(i);
+            for (int i = 0; i < listaNodos.getLength(); i++) { // recorro la lista
+                unNodo = listaNodos.item(i); // guardo cada elemento en cada iteracion
                 if (unNodo.getNodeType() == Node.ELEMENT_NODE){ //redundante por getElementsByTagName, no lo es si buscamos getChildNodes()
                     if(unNodo.getChildNodes().item(0).getTextContent().equals(titulo)){
+                        // el primer hijo de un elmento es su valor, si coincide con el que buscamos
                                                         // .getNodeValue()
                         System.out.println("Borramdo el Libro ....");
-
+// buscamos la raiz (padre de ttulo-> libro, su padre -> libros) y boorramos el padre(libro) de este tiitulo
                         unNodo.getParentNode().getParentNode().removeChild(unNodo.getParentNode());
                         System.out.println("... Nodo borrado.");
                     }                                                  
