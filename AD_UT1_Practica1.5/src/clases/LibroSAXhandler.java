@@ -6,7 +6,11 @@ import org.xml.sax.*;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-
+/**
+ * Clase handler para imprimir ppor pantalla todos los elementos, atributos y sus
+ * valores del xml de libros.
+ * @author anrod
+ */
 public class LibroSAXhandler extends DefaultHandler{ 
     
     private int contadorLibros;
@@ -17,7 +21,7 @@ public class LibroSAXhandler extends DefaultHandler{
     /**
      * Sobreescribimos el método para que nos muestre en pantalla una presetnación 
      * del xml
-     * @throws SAXException
+     * @throws SAXException Error de lectura del XML
      */
     @Override
     public void startDocument() throws SAXException {
@@ -33,14 +37,14 @@ public class LibroSAXhandler extends DefaultHandler{
      * @param localName
      * @param qName
      * @param atts
-     * @throws SAXException
+     * @throws SAXException Error de lectura del XML
      */
     @Override
     public void startElement(String uri,String localName,String qName,
             Attributes atts) throws SAXException{
 
         if(qName.equals("Libro")){
-            contadorLibros++;
+            contadorLibros++;  // solo para mostrar por que libro vamos.
             System.out.print("\nLibro nº "+contadorLibros+" --> ");
             System.out.print("Publicado en: "+ atts.getValue(atts.getQName(0))); // extrae el primer atributo              
         }else if(qName.equals("Titulo")){
@@ -57,7 +61,7 @@ public class LibroSAXhandler extends DefaultHandler{
      * @param uri
      * @param local
      * @param qName
-     * @throws SAXException
+     * @throws SAXException Error de lectura del XML
      */
     @Override
     public void endElement (String uri, String local, String qName) throws SAXException{
@@ -72,20 +76,20 @@ public class LibroSAXhandler extends DefaultHandler{
      * @param ch
      * @param start
      * @param lenght
-     * @throws SAXException
+     * @throws SAXException Error de lectura del XML
      */
     @Override
     public void characters(char[] ch, int start, int lenght) throws SAXException{
         String car = new String(ch,start,lenght);
-        car = car.replaceAll("\t", "");
-        car = car.replaceAll("\n", "");
-        System.out.print(car);
+        car = car.replaceAll("\t", ""); // quitamos tabulaciones
+        car = car.replaceAll("\n", ""); // quitamos saltos de linea
+        System.out.print(car); // lo muestro por pantalla
     }
 
     /**
      * Se sobreescribe este metodo que no esta en la practica para que el mensaje de final de ejecución
      * salga en una nueva linea.
-     * @throws SAXException
+     * @throws SAXException Error de lectura del XML
      */
     @Override
     public void endDocument() throws SAXException {

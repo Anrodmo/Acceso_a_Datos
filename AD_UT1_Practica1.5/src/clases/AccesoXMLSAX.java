@@ -10,7 +10,7 @@ import org.xml.sax.SAXException;
 
 /**
  * Con esta clase parsearemos el documento XML utilizando el hander que hemos 
- creado en LibroSAXhandler
+ * creado en LibroSAXhandler
  * @author anrod
  */
 public class AccesoXMLSAX {
@@ -25,14 +25,14 @@ public class AccesoXMLSAX {
     public int parsearXMLconLibrosSAXhandler (File f){
         int retorno=0;
         try{
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            parser = factory.newSAXParser();
-            LibroSAXhandler sh = new LibroSAXhandler();
-            parser.parse(f, sh);
+            SAXParserFactory factory = SAXParserFactory.newInstance(); // creo una factoria
+            parser = factory.newSAXParser();  // asigno un parser con la factoria 
+            LibroSAXhandler sh = new LibroSAXhandler(); // aqui es donde creo el handler
+            parser.parse(f, sh);  // aqui lanzo el parseo del archivo xml
             
         }catch (IOException | ParserConfigurationException | SAXException e){
             e.printStackTrace();
-            retorno = -1 ;
+            retorno = -1 ;  // si hay excepcion retorno -1
         }       
         return retorno;
     }
@@ -48,14 +48,14 @@ public class AccesoXMLSAX {
     public int parsearXMLconTitulosSAXHandler(File f){
         int retorno=0;
         try{
-            SAXParserFactory factory= SAXParserFactory.newInstance();
-            parser=factory.newSAXParser();
-            TituloSAXHandler sh = new TituloSAXHandler();
-            parser.parse(f, sh);
+            SAXParserFactory factory= SAXParserFactory.newInstance(); // creo una factoria
+            parser=factory.newSAXParser();  // asigno un parser con la factoria 
+            TituloSAXHandler sh = new TituloSAXHandler(); // aqui es donde creo el handler
+            parser.parse(f, sh); // aqui lanzo el parseo del archivo xml
             
         }catch (IOException | ParserConfigurationException | SAXException e){
             e.printStackTrace();
-            retorno = -1;
+            retorno = -1; // si hay excepcion retorno -1
         }       
         return retorno;
     }

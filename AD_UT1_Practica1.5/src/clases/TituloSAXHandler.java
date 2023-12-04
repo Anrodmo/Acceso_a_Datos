@@ -5,22 +5,37 @@ import org.xml.sax.*;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 /**
- *
+ *  Clase handler para el xml libros que imprime solo el titulo y el autor
  * @author anrod
  */
 public class TituloSAXHandler extends DefaultHandler{
-    private String etiqueta;
+    private String etiqueta; // variable donde guardare el elemento del xml
     
     public TituloSAXHandler(){
-        this.etiqueta="";
+        this.etiqueta=""; // seteo a cadena vacia
     }
     
+   /**
+     * Sobreescribimos el método para que nos muestre en pantalla una presetnación 
+     * del xml
+     */
     @Override
     public void startDocument() {
         System.out.println("LISTADO DE TITULOS");
         System.out.println("==================");
     }
-
+    
+    
+    /**
+     * Sobreescribimos el método que se ejecuta cuando el SAX abre un Element 
+     * paraque nos imprima por pantalla lo que queremos, en este caso lee el nombre
+     * del elemento 
+     * @param uri
+     * @param localName
+     * @param qName
+     * @param atts
+     * @throws SAXException Error de lectura del XML
+     */
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (qName.equals("Libro")){
@@ -45,18 +60,18 @@ public class TituloSAXHandler extends DefaultHandler{
      */
     @Override
     public void characters(char[] ch, int start, int lenght) throws SAXException{
-        if(etiqueta.equals("Titulo")){
+        if(etiqueta.equals("Titulo")){  // si es titulo hacemos algo
             String car = new String(ch,start,lenght);
-            car = car.replaceAll("\t", "");
-            car = car.replaceAll("\n", "");
-            car=car.trim();
-            System.out.print(" | "+car+" ");           
-        }else if(etiqueta.equals("Autor")){
+            car = car.replaceAll("\t", "");  // quito tabulaciones
+            car = car.replaceAll("\n", "");  // quito salto de linea
+            car=car.trim();  // quito espacios en blanco delante y detras
+            System.out.print(" | "+car+" ");     // imprimoo con separador para que quede bonito       
+        }else if(etiqueta.equals("Autor")){  // si es autor tambien hacemos cosas
             String car = new String(ch,start,lenght);
-            car = car.replaceAll("\t", "");
-            car = car.replaceAll("\n", "");
-            car=car.trim();
-            System.out.print(car);           
+            car = car.replaceAll("\t", "");   // quito tabulaciones
+            car = car.replaceAll("\n", "");   // quito salto de linea
+            car=car.trim();  // quito espacios en blanco delante y detras
+            System.out.print(car);      // imprimo.      
         }
         
     }
