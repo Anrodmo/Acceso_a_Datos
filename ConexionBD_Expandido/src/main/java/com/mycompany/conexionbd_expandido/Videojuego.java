@@ -189,7 +189,7 @@ public class Videojuego {
             System.out.print(nombreCol+": "+( (Date)valor) +", ");
         }else if (tipoDato.equals("DECIMAL")){  // el tipo de la BBDD es BigDecimal
             System.out.print(nombreCol+": "+( (BigDecimal)valor) +", ");
-        }else if (tipoDato.equals("INT")){  // esto es para el ido, comentar si no lo quiero mostrar
+        }else if (tipoDato.equals("INT")){  // esto es para el id, comentar si no lo quiero mostrar
             System.out.print(nombreCol+": "+( (int)valor) +", ");
         }
                       
