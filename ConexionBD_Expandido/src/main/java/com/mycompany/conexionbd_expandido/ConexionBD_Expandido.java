@@ -5,10 +5,10 @@
 
 package com.mycompany.conexionbd_expandido;
 
+
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 
 
@@ -25,13 +25,13 @@ public class ConexionBD_Expandido {
     public static void main(String[] args) {
         try {
             String query = "SELECT * FROM videojuegos";
-            
+            // inicio el pool de conexiones 
             PoolDeConexiones.inciarPool();
                                             
             
             System.out.println("============== Método para mostrar consulta por parámetro de entrada ==============");
             System.out.println("               Mostramos una consulta *");
-            Videojuego.muestraConsulta(query);
+            Videojuego.muestraConsulta(query); // metodo que muestra la query facilitada
             query = "SELECT Nombre,Genero FROM videojuegos";
             System.out.println("\n               Mostramos consulta Nombre, Genero");
             Videojuego.muestraConsulta(query);
@@ -73,4 +73,41 @@ public class ConexionBD_Expandido {
             ex.printStackTrace();
         }
     }
+    
+    
+//    private static int menu(){
+//        Scanner teclado = new Scanner(System.in);
+//        Boolean opcionCorrecta;
+//        int opcion=0;
+//        do {
+//            System.out.println("\nBiblioteca de videjuegos.");
+//            System.out.println("1.- Mostrar todos los juegos.");
+//            System.out.println("2.- Mostrar nombre y genero de los juegos.");
+//            System.out.println("3.- Buscar un videojuego por nombre.");
+//            System.out.println("4.- Eliminar un videojuego por nombre.");
+//            System.out.println("5.- Añadir un videojuego por nombre.");
+//            System.out.println("5.- Ejemplo de añadir videojuego prefabricado.");
+//            System.out.println("6.- Ejemplo de borrado");
+//            System.out.println("7.- Salir.");
+//            System.out.print("Opcion :");
+//
+//            try {
+//                opcion = teclado.nextInt();
+//                opcionCorrecta = true;
+//
+//            } catch (InputMismatchException ex) {
+//                System.out.println("Opción erronea, debe ser 1 a 7");
+//                opcionCorrecta = false;
+//                teclado.next();               
+//            }
+//            if (opcion < 1 || 3 < opcion) {
+//                System.out.println("Opción erronea, debe ser 1 a 7");              
+//            }
+//        } while (!opcionCorrecta || opcion < 1 || 7 < opcion);
+//
+//        return opcion; 
+//    }
+    
+    
+    
 }
