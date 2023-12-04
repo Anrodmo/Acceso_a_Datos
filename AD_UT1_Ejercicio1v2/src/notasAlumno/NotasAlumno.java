@@ -131,7 +131,7 @@ public class NotasAlumno {
         double  media;
         String  espacios="";
         for(int nota : this.notas){
-            suma+=nota; // añado el string oara cada nota de la coleccion
+            suma+=nota; // sumo para cada nota de la coleccion
         }
         for (int i = this.nombre.length(); i < 15; i++) {
             espacios+=" "; // añado  espacios  para justificar las notas medias
