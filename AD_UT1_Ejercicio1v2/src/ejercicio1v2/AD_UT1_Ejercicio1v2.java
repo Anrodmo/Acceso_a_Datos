@@ -18,6 +18,7 @@ public class AD_UT1_Ejercicio1v2 {
     public static void main(String[] args) {
         String ruta = "./src/ejercicio1v2/alumnosNotas.txt";
         String rutaBackup = "./src/ejercicio1v2/alumnosNotasBackup.txt";
+        String rutaMedia = "./src/ejercicio1v2/alumnosNotasMedias.txt";
         ArrayList <NotasAlumno> listado=null;
         
         if( (listado = NotasAlumno.leerArchivoNotas(ruta)) != null ){
@@ -27,6 +28,10 @@ public class AD_UT1_Ejercicio1v2 {
             
             System.out.println("Escribiendo notas en archivo backup ....");
             NotasAlumno.escribirNotasEnDisco(listado, rutaBackup);
+            System.out.println("... escritura completada.");
+            
+            System.out.println("Escribiendo notas medias en archivo ....");
+            NotasAlumno.escribirNotaMediaenDisco(listado, rutaMedia);
             System.out.println("... escritura completada.");
             
         }

@@ -1,0 +1,4 @@
+Nombre : pepe           |     Nota media : 4,00
+Nombre : ana            |     Nota media : 7,00
+Nombre : luisa          |     Nota media : 9,00
+Nombre : diego          |     Nota media : 4,00

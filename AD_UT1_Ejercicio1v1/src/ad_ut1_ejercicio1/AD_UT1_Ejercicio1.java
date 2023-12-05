@@ -59,6 +59,7 @@ public class AD_UT1_Ejercicio1 {
     /**
      * Muestra el nombre del alumno y su nota media. El string origen tiene que tener el formato
      * nombre_alumno:nota:nota:nota:... donde nota deben ser enteros.
+     * En clase sedijo que en lugar de guardar en disco se mostrara por pantalla
      * @param String ruta del archivo CSV
      */
     private static void imprimirNotaMedia(String datos){
@@ -70,14 +71,14 @@ public class AD_UT1_Ejercicio1 {
         while ( entradaDatos.hasNext() ){ 
             linea = entradaDatos.nextLine().split(":");
             suma=0;                                
-            for (int i = 1; i < linea.length; i++) {
+            for (int i = 1; i < linea.length; i++) { // bucle desde el segundo dato que ya es una  nota
                try{
                    suma+= Integer.parseInt(linea[i])  ; 
                }catch (NumberFormatException ex){
                    System.out.println("Error. Dato leido no es una nota válida.");
                }                              
             }           
-            media = (double)suma/(linea.length-1);
+            media = (double)suma/(linea.length-1); // casteo a doble par guardar los decimales de la media
             System.out.print("Alumno: "+linea[0]);
             System.out.print(" | Nota media: "+media+"\n");           
         }      

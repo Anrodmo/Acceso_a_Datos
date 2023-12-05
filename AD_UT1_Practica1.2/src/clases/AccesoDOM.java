@@ -6,6 +6,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.*;//for Document
 import org.w3c.dom.Document;
 import java.io.*;//clase File
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
@@ -137,7 +139,7 @@ public class AccesoDOM {
      */
     private boolean hijosSonElementos(NodeList  nodosHijos){
         boolean tieneHijosElementos=false; // almaceno si tiene hijos elementos
-        for (int i = 0; i < nodosHijos.getLength() && tieneHijosElementos; i++) {    // recorro todos los hijos      
+        for (int i = 0; i < nodosHijos.getLength() && !tieneHijosElementos; i++) {    // recorro todos los hijos      
             if(nodosHijos.item(i).getNodeType() == Node.ELEMENT_NODE)
                 tieneHijosElementos = true;
             //si alguno es elemento devuelvo true y finalizo bucle
@@ -246,28 +248,47 @@ public class AccesoDOM {
         return correcto;
     }
     
-    public void guardarDOMcomoArchivo(String ruta){
-        try{
-            Source src = new DOMSource(miDocumento); // definimos el origen
-            StreamResult srt = new StreamResult(new File(ruta)); // definimos el resultado
-            Transformer tranformador = TransformerFactory.newInstance().newTransformer();
-            
-            // Opción para indentar el archivo
-            tranformador.setOutputProperty(OutputKeys.INDENT, "yes");
-            
-            tranformador.transform(src, (javax.xml.transform.Result)srt);
-            
-            System.out.println("Archivo creado con exito.");
-            
-        } catch (TransformerConfigurationException ex) {
-            System.out.println(ex);
-        } catch (TransformerException ex) {
-            System.out.println(ex);
+    /**
+     * Metodo que guarda  el dom en la ruta especificada.
+     * @param ruta String, no debe ser null ni un directorio, si existe se debe 
+     * poder sobreescribir
+     * @return 0 -> operacin realizada con éxito, -1 en caso contrario
+     */
+    public int guardarDOMcomoArchivo(String ruta){
+        
+        int retorno = -1; // si no se guarda devuelve error.
+        // si el String es nulo no hago nada
+        if(ruta!= null){
+            File archivoDestino = new File (ruta);
+            try {
+                // si el file no es un directorio y
+                if( !archivoDestino.isDirectory() &&
+                        // o no existe y crearé uno nuevo, o existe y puedo sobreescribir encima
+                        ( archivoDestino.createNewFile() || archivoDestino.canWrite()) ){
+                    try{
+                        Source src = new DOMSource(miDocumento); // definimos el origen
+                        StreamResult srt = new StreamResult(new File(ruta)); // definimos el resultado
+                        Transformer tranformador = TransformerFactory.newInstance().newTransformer();
+                        
+                        // Opción para indentar el archivo
+                        tranformador.setOutputProperty(OutputKeys.INDENT, "yes");
+                        // aqui es cuando escribo
+                        tranformador.transform(src, (javax.xml.transform.Result)srt);
+                        retorno =0; // si llego aqui todo fuebien
+                        System.out.println("Archivo creado con exito.");
+                        
+                    } catch (TransformerConfigurationException ex) {
+                        System.out.println(ex);
+                    } catch (TransformerException ex) {
+                        System.out.println(ex);
+                    }
+                }
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
         }
-        
-        
-        
-        
+        return retorno;
+              
     }
      
 }
