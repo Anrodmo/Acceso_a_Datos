@@ -25,13 +25,14 @@ public class Alumno implements Serializable {
     @Basic   // campos normales
     private String nombre;
     private String apellido;
-    @Temporal(TemporalType.DATE)   // ibdicamos que es un campo solo fecha 
+    @Temporal(TemporalType.DATE)   // indicamos que es un campo solo fecha 
     private Calendar fechaNac;  // alfinal lo cambioa a Calendar porque Date esta medio  deprecated
                                 // y mysql admite o Date o Calendar, pero no LocalDate
     
     @OneToOne
-    private Carrera suCarrera;
-    
+    private Carrera suCarrera;  // como prueba se define 1to1, es decir una alumno una carrera
+                                // esto nos va a crear un id de la carrera en la tabla alumnos
+                                // en este caso no se crea relacion en la clase Carrera
 //    @Transient     // esto se usaria para definir atributos quen quiero que sean
 //    private int años;    // persistentes en la BBDD
     

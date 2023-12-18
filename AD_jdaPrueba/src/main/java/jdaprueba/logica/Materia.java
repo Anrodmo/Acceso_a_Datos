@@ -17,8 +17,14 @@ public class Materia implements Serializable {
     
     private String nombre;
     private String tipo;
-    @ManyToOne
-    private Carrera carreraEnMateria;
+    
+    /*
+    Cada materia lo es de una sola carrera, las carreras tienen muchas materias.
+    Al definir el obejto carrera al que pertenece en la BBDD nos creará un ID de
+    la carrera en la table de las materias.
+    */
+    @ManyToOne    // <- se tiene que llammar igual que como lo pusimos en la annotation 
+    private Carrera carreraEnMateria;  // de la lista de Materias en Carrera
 
     public Materia() {
     }

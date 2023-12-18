@@ -17,9 +17,14 @@ public class Carrera implements Serializable {
     private int id;
     private String nombre;
     
-    @OneToMany (mappedBy = "carreraEnMateria")
-    private LinkedList<Materia> listaMateria;
-
+/*  Cada carrera tiene muchas materias y cada materia lo es de una sola carrera.
+    Como la carrera tiene muchas materias se trae aqui una Lista con todas ellas
+    Si solo hacemos esto  (en el lado de la materia no hacemos nada) entonces en la
+    BBDD se crea una tabla con idCarrera + idMateria.
+    */
+    @OneToMany (mappedBy = "carreraEnMateria")  //<- Hay que decirle como se va
+    private LinkedList<Materia> listaMateria;   // llamar en la BBDD el campo que será
+                                                // el id de carrera en Materia
     public Carrera() {
     }
 

@@ -17,7 +17,7 @@ import jdaprueba.logica.Alumno;
 import jdaprueba.persistencia.exceptions.NonexistentEntityException;
 
 /**
- *
+ * Estas clases se crean new -> Other -> Persistencia -> new java persisitence class from ....
  * @author anrod
  */
 public class AlumnoJpaController implements Serializable {

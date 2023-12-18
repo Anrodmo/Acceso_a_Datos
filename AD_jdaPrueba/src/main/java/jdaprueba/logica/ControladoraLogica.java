@@ -6,11 +6,13 @@ import java.util.LinkedList;
 import jdaprueba.persistencia.ControladoraPersistencia;
 
 /**
- *
+ * Coon esta clase recogeremos los datos de la interfaz gráfica (en este ejemplo 
+ * el main) y los trasladaremos a la controladora de la persistencia
  * @author anrod
  */
 public class ControladoraLogica {
-    
+    // Creamos un objeto de la controladora de persistencia para manejar la 
+    // transferencia de datos
     ControladoraPersistencia controlPersis = new ControladoraPersistencia();
     
     

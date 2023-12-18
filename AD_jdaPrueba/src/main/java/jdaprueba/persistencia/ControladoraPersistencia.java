@@ -11,13 +11,21 @@ import jdaprueba.logica.Carrera;
 import jdaprueba.logica.Materia;
 import jdaprueba.persistencia.exceptions.NonexistentEntityException;
 
-
+/**
+ * Esta clase recibe los datos de la coontroladora lógica y los transmite a las
+ * diferentes clases de persistencia para manejar la BBDD
+ * @author anrod
+ */
 public class ControladoraPersistencia {
     
+    // Cremos un objeto de cada una de las clases controladoras de persistencia
     AlumnoJpaController alumnoJPA = new AlumnoJpaController();
     CarreraJpaController carreraJPA = new CarreraJpaController();
     MateriaJpaController materiaJPA = new MateriaJpaController();
-
+    
+    
+    // Creamos los diferentes métodos que necesitaremos para cada una de las clases
+    // de persistencia, en este caso los métodos son iguales (con var diferentee)
     public void crearAlumno(Alumno alu) {
           alumnoJPA.create(alu);
     }
