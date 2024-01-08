@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="AccesoBBDDMySQL/src/main/java"/>
+	<classpathentry kind="src" path="AD_jdaPrueba/src/main/java"/>
+	<classpathentry kind="src" path="AD_jdaPrueba/target/generated-sources/annotations"/>
+	<classpathentry kind="src" path="AD_UT0_Preevaluacion/AD_Evaluacion_Inicial/src"/>
+	<classpathentry kind="src" path="AD_UT1_Ejercicio1v1/src"/>
+	<classpathentry kind="src" path="AD_UT1_Ejercicio1v2/src"/>
+	<classpathentry kind="src" path="AD_UT1_Maven_Jakarta/src/main/java"/>
+	<classpathentry kind="src" path="AD_UT1_Practica_Dom4j/src"/>
+	<classpathentry kind="src" path="AD_UT1_Practica1.1/src"/>
+	<classpathentry kind="src" path="AD_UT1_Practica1.2/src"/>
+	<classpathentry kind="src" path="AD_UT1_Practica1.5_JAXB/src"/>
+	<classpathentry kind="src" path="AD_UT1_Practica1.5_XMLBooks/src"/>
+	<classpathentry kind="src" path="AD_UT1_Practica1.5/src"/>
+	<classpathentry kind="src" path="ConexionBD_Expandido/src/main/java"/>
+	<classpathentry kind="src" path="ConexionBD/src/main/java"/>
+	<classpathentry kind="lib" path="AccesoBBDDMySQL/target/AccesoBBDDMySQL-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="AD_jdaPrueba/lib/unknown/binary/eclipselink/SNAPSHOT/eclipselink-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="AD_jdaPrueba/lib/unknown/binary/eclipselink-sources/SNAPSHOT/eclipselink-sources-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="AD_jdaPrueba/lib/unknown/binary/org.eclipse.persistence.dbws.builder/SNAPSHOT/org.eclipse.persistence.dbws.builder-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="AD_jdaPrueba/lib/unknown/binary/org.eclipse.persistence.extension/SNAPSHOT/org.eclipse.persistence.extension-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="AD_jdaPrueba/lib/unknown/binary/org.eclipse.persistence.nosql/SNAPSHOT/org.eclipse.persistence.nosql-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="AD_jdaPrueba/lib/unknown/binary/org.eclipse.persistence.oracle.nosql/SNAPSHOT/org.eclipse.persistence.oracle.nosql-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="AD_jdaPrueba/lib/unknown/binary/package-rename/SNAPSHOT/package-rename-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="AD_jdaPrueba/target/AD_jdaPrueba-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="ConexionBD/target/ConexionBD-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="output" path="AD_UT1_Ejercicio1v1/build/classes"/>
+</classpath>
